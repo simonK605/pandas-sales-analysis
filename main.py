@@ -22,6 +22,13 @@ all_data = all_data.dropna(how='all')
 # Find 'Or' because of wrong data (Order Date)
 all_data = all_data[all_data['Order Date'].str[0:2] != 'Or']
 
-# Fix dtype
+# Add 'Month' column
 all_data['Month'] = all_data['Order Date'].str[0:2]
 all_data['Month'] = all_data['Month'].astype('int32')
+
+# Add 'Sales' column
+all_data['Quantity Ordered'] = pd.to_numeric(all_data['Quantity Ordered'])
+all_data['Price Each'] = pd.to_numeric(all_data['Price Each'])
+all_data['Sales'] = all_data['Quantity Ordered'] * all_data['Price Each']
+
+print(all_data.groupby('Month').sum())
