@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 import os
 
 all_months_data = pd.DataFrame()
@@ -31,4 +32,11 @@ all_data['Quantity Ordered'] = pd.to_numeric(all_data['Quantity Ordered'])
 all_data['Price Each'] = pd.to_numeric(all_data['Price Each'])
 all_data['Sales'] = all_data['Quantity Ordered'] * all_data['Price Each']
 
-print(all_data.groupby('Month').sum())
+results = all_data.groupby('Month').sum()
+
+months = range(1, 13)
+plt.bar(months, results['Sales'])
+plt.xticks(months)
+plt.ylabel('Sales in USD ($)')
+plt.xlabel('Month number')
+plt.show()
